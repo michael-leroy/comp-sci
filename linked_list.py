@@ -115,6 +115,24 @@ class LinkedList(object):
             current = current.get_next()
         return count
 
+    def reverse(self, node, prev_node=None):
+        '''
+        Reverses the linked list in place.
+        Trickyyyy
+        '''
+        if node.next_node is None:
+            self.head = node
+            node.next_node = prev_node
+            return
+        elif prev_node is None:
+            print('called')
+            node.next_node = self.reverse(node.next_node, node)
+        else:
+            temp_next_node = node.next_node
+            node.next_node = prev_node
+            self.reverse(temp_next_node, node)
+
+
 
 class TestLinkedListMethods(unittest.TestCase):
 
@@ -237,9 +255,34 @@ class TestLinkedListMethods(unittest.TestCase):
         self.assertEqual(a.access_data(0), 'foo')
         self.assertEqual(a.access_data(1), 'jazzhands')
 
+    def test_revser_ll_single_item_ll(self):
+        '''
+        Test member function if there is only a 
+        single node in the ll.
+        '''
+        a = LinkedList()
+        a.insert('foo', 0)
+        a.reverse(a.head)
+        self.assertEqual(a.access_data(0), 'foo')
+        self.assertEqual(a.head.data, 'foo')
+        self.assertIsNone(a.head.next_node)
 
 
-
+    def test_reverse_ll(self):
+        '''
+        Test member function that reverses the ll.
+        '''
+        a = LinkedList()
+        a.insert('foo', 0)
+        a.insert('bar', 1)
+        a.insert('spam', 2)
+        a.insert('jazzhands', 3)
+        a.reverse(a.head)
+        self.assertEqual(a.access_data(0), 'jazzhands')
+        self.assertEqual(a.access_data(1), 'spam')
+        self.assertEqual(a.access_data(2), 'bar')
+        self.assertEqual(a.access_data(3), 'foo')
+        self.assertEqual(a.head.data, 'jazzhands')
 if __name__ == "__main__":
     unittest.main()
 
