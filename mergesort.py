@@ -6,7 +6,7 @@ import random
 
 def mergesort(sort_list):
     if len(sort_list) == 1 or len(sort_list) == 0:
-        return sort_list[:len(sort_list)]
+        return sort_list
 
     middle = math.floor(len(sort_list) / 2)
 
